@@ -3,8 +3,14 @@ import db from "@repo/db/client";
 
 const app = express();
 
-app.get("/hdfcWebhook", async (req, res) => {
-    const paymentInformation = {
+app.use(express.json());
+
+app.post("/hdfcWebhook", async (req, res) => {
+    const paymentInformation: {
+        token: string,
+        userId: number,
+        amount: number
+    } = {
         token: req.body.token,
         userId: req.body.user_identifier,
         amount: req.body.amount
@@ -40,3 +46,7 @@ app.get("/hdfcWebhook", async (req, res) => {
         })
     }
 })
+
+app.listen(3000, () => {
+    console.log("Server started at 3000");
+});
